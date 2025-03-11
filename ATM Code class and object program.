@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+
+class ATM {
+private:
+    double balance;
+    int pin;
+
+public:
+    ATM(double b, int p) {
+        balance = b;
+        pin = p;
+    }
+
+    bool verifyPin() {
+        int enteredPin;
+        cout << "\nEnter ATM PIN: ";
+        cin >> enteredPin;
+        if (enteredPin == pin) return true;
+        cout << "\nIncorrect PIN!\n";
+        return false;
+    }
+
+    void deposit(double amt) {
+        if (amt > 0) {
+            balance += amt;
+            cout << "\nDeposited: Rs. " << amt << endl;
+        }
+    }
+
+    void withdraw(double amt) {
+        if (amt > 0 && amt <= balance) {
+            balance -= amt;
+            cout << "\nWithdrawn: Rs. " << amt << endl;
+        } else {
+            cout << "\nInsufficient balance!\n";
+        }
+    }
+
+    void checkBalance() {
+        cout << "\nBalance: Rs. " << balance << endl;
+    }
+};
+
+int main() {
+    ATM atm(5000, 1234);
+    int ch;
+    double amt;
+
+    cout << "\n========== Welcome to ATM ==========\n";
+
+    if (!atm.verifyPin()) return 0;
+
+    do {
+        cout << "\n========== ATM MENU ==========\n";
+        cout << "1. Check Balance\n";
+        cout << "2. Deposit\n";
+        cout << "3. Withdraw\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> ch;
+
+        if (ch == 2 || ch == 3) {
+            cout << "\nEnter Amount: ";
+            cin >> amt;
+        }
+
+        if (ch == 1) 
+            atm.checkBalance();
+        else if (ch == 2) 
+            atm.deposit(amt);
+        else if (ch == 3) 
+            atm.withdraw(amt);
+
+    } while (ch != 4);
+
+    cout << "\nThank you for using ATM!\n";
+}
